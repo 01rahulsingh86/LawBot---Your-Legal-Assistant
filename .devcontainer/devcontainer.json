@@ -1,0 +1,28 @@
+{
+  "name": "AI Chatbot (Streamlit)",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+
+  // Install deps after container is created
+  "postCreateCommand": "pip install pipenv && pipenv install --dev && pipenv run pip install streamlit",
+
+  // Automatically start Streamlit each time the container starts
+  "postStartCommand": "pipenv run streamlit run lawbot.py --server.address 0.0.0.0 --server.port 8080",
+
+  // Make the Streamlit port visible
+  "forwardPorts": [8080],
+  "portsAttributes": {
+    "8080": {
+      "label": "Streamlit UI",
+      "onAutoForward": "openBrowser"
+    }
+  },
+
+  // Optional: pass environment file if you keep HF_TOKEN in .env
+  "runArgs": ["--env-file", ".env"],
+
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python", "ms-toolsai.jupyter"]
+    }
+  }
+}
